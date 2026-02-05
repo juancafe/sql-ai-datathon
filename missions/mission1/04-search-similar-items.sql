@@ -1,5 +1,5 @@
 -- =============================================================================
--- Mission 1: Semantic Search with AI_GENERATE_EMBEDDINGS
+-- Semantic Search with AI_GENERATE_EMBEDDINGS
 -- =============================================================================
 -- Description: Performs end-to-end semantic similarity search by:
 --              1. Generating a vector embedding from a natural language query
@@ -24,33 +24,24 @@
 --   - similar_items table with matching products and similarity scores
 -- =============================================================================
 
-
 -- -----------------------------------------------------------------------------
--- SECTION 1: Define Search Query
+-- SECTION 1: Test Embedding Generation (Optional - can run separately)
 -- -----------------------------------------------------------------------------
-USE ProductDB;
+-- This standalone query tests that the embedding model is working
+SELECT AI_GENERATE_EMBEDDINGS('test query' USE MODEL MyEmbeddingModel) AS test_embedding;
 GO
 
 
+-- -----------------------------------------------------------------------------
+-- SECTION 2: Search Similar Items (Run as a single batch)
+-- -----------------------------------------------------------------------------
+-- ⚠️ IMPORTANT: Select ALL code below and run together as one batch
+
 DECLARE @text NVARCHAR(MAX) = 'anything for a teenager boy passionate about racing cars? he owns an XBOX, he likes to build stuff';
-
-
--- -----------------------------------------------------------------------------
--- SECTION 2: Call Azure OpenAI Embedding API
--- -----------------------------------------------------------------------------
-SELECT AI_GENERATE_EMBEDDINGS(@text USE MODEL MyEmbeddingModel);
-
-
--- -----------------------------------------------------------------------------
--- SECTION 3: Configure Search Parameters
--- -----------------------------------------------------------------------------
 DECLARE @top INT = 50;
 DECLARE @min_similarity DECIMAL(19,16) = 0.3;
 DECLARE @qv VECTOR(1536) = AI_GENERATE_EMBEDDINGS(@text USE MODEL MyEmbeddingModel);
 
--- -----------------------------------------------------------------------------
--- SECTION 4: Execute Vector Similarity Search
--- -----------------------------------------------------------------------------
 DROP TABLE IF EXISTS similar_items;
 
 SELECT TOP (10) 
@@ -71,8 +62,63 @@ FROM VECTOR_SEARCH(
 WHERE r.distance <= 1 - @min_similarity
 ORDER BY r.distance;
 
+SELECT * FROM similar_items;
+GO
+
 
 -- -----------------------------------------------------------------------------
--- SECTION 5: Display Results
+-- SECTION 3: Stored Procedure Alternative (Recommended)
 -- -----------------------------------------------------------------------------
-SELECT * FROM similar_items;
+-- This stored procedure encapsulates the search logic, avoiding batch issues
+-- Run this once to create the procedure, then call it anytime
+
+CREATE OR ALTER PROCEDURE dbo.search_similar_items
+    @search_text NVARCHAR(MAX),
+    @top_n INT = 10,
+    @min_similarity DECIMAL(19,16) = 0.3
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @qv VECTOR(1536) = AI_GENERATE_EMBEDDINGS(@search_text USE MODEL MyEmbeddingModel);
+    
+    DROP TABLE IF EXISTS similar_items;
+    
+    SELECT TOP (@top_n)
+        w.id,
+        w.product_name,
+        w.description,
+        w.category,
+        r.distance,
+        1 - r.distance AS similarity
+    INTO similar_items
+    FROM VECTOR_SEARCH(
+        TABLE = dbo.walmart_ecommerce_product_details AS w,
+        COLUMN = embedding,
+        SIMILAR_TO = @qv,
+        METRIC = 'cosine',
+        TOP_N = @top_n
+    ) AS r
+    WHERE r.distance <= 1 - @min_similarity
+    ORDER BY r.distance;
+    
+    SELECT * FROM similar_items;
+END;
+GO
+
+
+-- -----------------------------------------------------------------------------
+-- SECTION 4: Example Usage of Stored Procedure
+-- -----------------------------------------------------------------------------
+-- After creating the procedure, you can run searches easily:
+
+EXEC dbo.search_similar_items 
+    @search_text = 'anything for a teenager boy passionate about racing cars? he owns an XBOX, he likes to build stuff';
+GO
+
+-- With custom parameters:
+EXEC dbo.search_similar_items 
+    @search_text = 'wireless headphones for music',
+    @top_n = 5,
+    @min_similarity = 0.5;
+GO

@@ -2,14 +2,14 @@
 
 Welcome to the SQL AI Datathon! You'll complete guided missions that will prepare you for building AI-powered applications with Microsoft SQL. You’ll use AI features to build embeddings, semantic/hybrid search, DAB endpoints, and an agent with RAG.
 
-Complete all four missions to level up your skills, and add your own creative twist in the Open Hack and be eligible for judging for a ticket to [SQLCon 2026](https://techcon365.com/26sqlcon/)!
+Complete all four missions to level up your skills, and add your own creative twist in the Open Hack to be eligible for judging for a ticket to [SQLCon 2026](https://techcon365.com/26sqlcon/)!
 
 
 ## Quick Start
 1. Fork this repo.
 2. Clone, or open in Codespaces. 
-3. Complete the missions and repeat for Missions 2, 3, 4.
-4. Learn how to submit an entry for the Open Hack project in [`open-hack.md`](open-hack.md).
+3. Complete all missions, 1-4.
+4. 4. Learn how to submit an entry for the Open Hack project in [`open-hack.md`](open-hack.md).
 
 ## Mission Briefs
 1. [Embeddings & Search](missions/mission1/README.md) ([folder](missions/mission1))
@@ -24,5 +24,10 @@ Complete all four missions to level up your skills, and add your own creative tw
 - An agent that answers questions grounded in your SQL data
 
 ## How you’re evaluated for the Open Hack
-- README clarity & reproducibility
-- Creativity, impact, and alignment with SQL + AI objectives
+| Criteria | What Judges Look For |
+|----------|---------------------|
+| **Problem Understanding** | Clear project type (Chatbot or Search), SQL as data source, proper RAG implementation |
+| **Innovation & Creativity** | Original approach, creative use of embeddings/semantic search, unique UX or data usage |
+| **Technical Execution** | Sound implementation, reproducible setup, focused scope, clear documentation |
+| **Insight & Impact** | Meaningful outcomes, depth of analysis, real-world applicability |
+

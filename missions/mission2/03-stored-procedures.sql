@@ -108,7 +108,7 @@ create or alter procedure [dbo].[get_similar_items]
 @error nvarchar(max) = null output
 as
 declare @top int = 10
-declare @min_similarity decimal(19,16) = 0.75
+declare @min_similarity decimal(19,16) = 0.3
 declare @qv vector(1536)
 declare @embedding vector(1536)
 exec dbo.get_embedding @inputText = @inputText, @embedding = @embedding output, @error = @error output

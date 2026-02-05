@@ -45,7 +45,7 @@ SELECT AI_GENERATE_EMBEDDINGS(@text USE MODEL MyEmbeddingModel);
 -- SECTION 3: Configure Search Parameters
 -- -----------------------------------------------------------------------------
 DECLARE @top INT = 50;
-DECLARE @min_similarity DECIMAL(19,16) = 0.75;
+DECLARE @min_similarity DECIMAL(19,16) = 0.3;
 DECLARE @qv VECTOR(1536) = AI_GENERATE_EMBEDDINGS(@text USE MODEL MyEmbeddingModel);
 
 -- -----------------------------------------------------------------------------

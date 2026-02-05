@@ -7,7 +7,7 @@
 --
 -- Prerequisites:
 --   - Mission 1 completed (similar_items table populated)
---   - Azure OpenAI GPT-4 model deployed
+--   - Azure OpenAI gpt-5-mini model deployed
 --   - Database-scoped credentials configured for OpenAI endpoint
 --
 -- Configuration:
@@ -17,15 +17,17 @@
 --   1. Retrieves products from similar_items table (from vector search)
 --   2. Formats products as JSON array for context
 --   3. Constructs a prompt with system instructions and product data
---   4. Calls GPT-4 to generate a natural language response
---   5. Model explains why each product matches the user's request
+--   4. Calls Azure OpenAI Responses API to generate a natural language response
+--   5. Extracts response from $.result.output[1].content[0].text path
 --
 -- Prompt Structure:
 --   - System: Instructions for product recommendation behavior
 --   - Assistant: Product catalog data in JSON format
 --   - User: The original search query/request
 --
--- Temperature: 0.2 (low creativity, high consistency)
+-- API Format:
+--   Uses Azure OpenAI Responses API (api-version=2025-04-01-preview)
+--   Response path: $.result.output[1].content[0].text
 --
 -- Output:
 --   Natural language response with product recommendations and explanations
@@ -35,6 +37,9 @@
 -- -----------------------------------------------------------------------------
 -- SECTION 1: Define User Request
 -- -----------------------------------------------------------------------------
+USE ProductDB;
+GO
+
 DECLARE @request NVARCHAR(MAX) = 'anything for a teenager boy passionate about racing cars? he owns an XBOX, he likes to build stuff';
 
 
@@ -89,28 +94,26 @@ DECLARE @prompt NVARCHAR(MAX) = JSON_OBJECT(
             'content': @request
         )
     ),    
-    'temperature': 0.2,
-    'frequency_penalty': 0,
-    'presence_penalty': 0,    
-    'stop': NULL
+    'model': 'gpt-5-mini'
 );
 
 
 -- -----------------------------------------------------------------------------
 -- SECTION 4: Call Azure OpenAI Chat Completion API
 -- -----------------------------------------------------------------------------
+-- NOTE: This uses the gpt-5-mini model. To use a different model, update "gpt-5-mini" in the URL below
+-- and in any other files that reference it (e.g., mission3 notebooks, mission4 apps).
 DECLARE @retval INT, @response NVARCHAR(MAX);
 
 EXEC @retval = sp_invoke_external_rest_endpoint
-    @url = 'https://<FOUNDRY_RESOURCE_NAME>.cognitiveservices.azure.com/openai/deployments/gpt-4.1/chat/completions?api-version=2024-08-01-preview',
+    @url = 'https://<FOUNDRY_RESOURCE_NAME>.cognitiveservices.azure.com/openai/deployments/gpt-5-mini/chat/completions?api-version=2025-04-01-preview',
     @headers = '{"Content-Type":"application/json"}',
     @method = 'POST',
-    @credential = [https://<FOUNDRY_RESOURCE_NAME>.cognitiveservices.azure.com/],
+    @credential = [<OPENAI_URL>],
     @timeout = 120,
     @payload = @prompt,
     @response = @response OUTPUT
     WITH RESULT SETS NONE;
-
 
 -- -----------------------------------------------------------------------------
 -- SECTION 5: Display Results
@@ -119,6 +122,8 @@ EXEC @retval = sp_invoke_external_rest_endpoint
 SELECT @response AS raw_response;
 
 -- Extracted chat message
-SELECT JSON_VALUE(@response, '$.result.choices[0].message.content') AS chat_response;
+SELECT o.[text] AS chat_response
+FROM OPENJSON(@response, '$.result.output[1].content') 
+WITH ([text] NVARCHAR(MAX)) AS o;
 
 

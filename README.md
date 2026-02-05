@@ -4,13 +4,13 @@ Welcome to the SQL AI Datathon! You'll complete guided missions that will prepar
 
 Complete all four missions to level up your skills, and add your own creative twist in the Open Hack to be eligible for judging for a ticket to [SQLCon 2026](https://techcon365.com/26sqlcon/)!
 
-[Watch a live walkthrough of the missions on February 12th and 19th](https://developer.microsoft.com/en-us/reactor/series/S-1641/)
+[Watch a live walkthrough of the missions on February 12th and 19th, 2026](https://developer.microsoft.com/en-us/reactor/series/S-1641/)
 
 ## Quick Start
 1. Fork this repo.
 2. Clone, or open in Codespaces. 
 3. Complete all missions, 1-4.
-4. 4. Learn how to submit an entry for the Open Hack project in [`open-hack.md`](open-hack.md).
+4. Learn how to submit an entry for the Open Hack project in [`open-hack.md`](open-hack.md).
 
 ## Mission Briefs
 1. [Embeddings & Search](missions/mission1/README.md) ([folder](missions/mission1))

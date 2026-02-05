@@ -1,6 +1,8 @@
 -- =============================================================================
 -- Mission 2: Stored Procedures for RAG Pipeline
 -- =============================================================================
+-- ⚠️ BEFORE RUNNING: Verify you are connected to ProductDB
+-- =============================================================================
 -- Description: Reusable stored procedures that encapsulate embedding generation
 --              and vector similarity search logic for the RAG pipeline.
 --
@@ -39,11 +41,6 @@ Returns:
     0           - Success
     -1          - Embedding generation failure
 ================================================================================
-
-USE ProductDB;
-GO
-
-
 */
 create or alter procedure [dbo].[get_embedding]
 @inputText nvarchar(max),

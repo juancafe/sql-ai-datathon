@@ -1,6 +1,8 @@
 -- =============================================================================
 -- Mission 1: Configure Credentials and External Model for Embeddings
 -- =============================================================================
+-- ⚠️ BEFORE RUNNING: Verify you are connected to ProductDB
+-- =============================================================================
 -- Description: Creates database-scoped credentials and an external model for 
 --              secure access to AI endpoints. The external model is used by 
 --              AI_GENERATE_EMBEDDINGS() to generate vector embeddings.
@@ -24,10 +26,6 @@
 --   After running, you can use:
 --     AI_GENERATE_EMBEDDINGS(@text USE MODEL MyEmbeddingModel)
 -- =============================================================================
-
-
-USE ProductDB;
-GO
 
 
 -- =============================================================================

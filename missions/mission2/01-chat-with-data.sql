@@ -1,6 +1,8 @@
 -- =============================================================================
 -- Mission 2: Chat with Data using RAG
 -- =============================================================================
+-- ⚠️ BEFORE RUNNING: Verify you are connected to ProductDB
+-- =============================================================================
 -- Description: Implements Retrieval-Augmented Generation (RAG) by combining
 --              vector search results with a language model to generate natural
 --              language responses grounded in actual product data.
@@ -37,8 +39,6 @@
 -- -----------------------------------------------------------------------------
 -- SECTION 1: Define User Request
 -- -----------------------------------------------------------------------------
-USE ProductDB;
-GO
 
 DECLARE @request NVARCHAR(MAX) = 'anything for a teenager boy passionate about racing cars? he owns an XBOX, he likes to build stuff';
 

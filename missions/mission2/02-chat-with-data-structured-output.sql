@@ -1,6 +1,8 @@
 -- =============================================================================
 -- Mission 2: Structured JSON Output from Chat
 -- =============================================================================
+-- ⚠️ BEFORE RUNNING: Verify you are connected to ProductDB
+-- =============================================================================
 -- Description: Extends RAG implementation to return structured JSON output
 --              instead of free-form text. Uses JSON Schema feature
 --              to enforce consistent output format for easier processing.
@@ -45,8 +47,6 @@
 -- -----------------------------------------------------------------------------
 -- SECTION 1: Define User Request
 -- -----------------------------------------------------------------------------
-USE ProductDB;
-GO
 
 DECLARE @request NVARCHAR(MAX) = 'anything for a teenager boy passionate about racing cars? he owns an XBOX, he likes to build stuff';
 

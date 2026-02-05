@@ -1,6 +1,8 @@
 -- =============================================================================
 -- Mission 1: Load Product Data with Embeddings
 -- =============================================================================
+-- ⚠️ BEFORE RUNNING: Verify you are connected to ProductDB
+-- =============================================================================
 -- Description: Loads the Walmart product dataset with pre-computed embeddings
 --              from Azure Blob Storage or local file system into the database.
 --
@@ -22,8 +24,6 @@
 -- Index Created:
 --   - vec_idx: DISKANN vector index on embedding column for fast similarity search
 -- =============================================================================
-USE ProductDB;
-GO
 
 -- -----------------------------------------------------------------------------
 -- SECTION 1: Prerequisites & Cleanup

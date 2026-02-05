@@ -1,6 +1,8 @@
 -- =============================================================================
 -- Mission 1: Create Product Database and Table
 -- =============================================================================
+-- ⚠️ BEFORE RUNNING: Verify you are connected to ProductDB (or create it first)
+-- =============================================================================
 -- Description: Creates the ProductDB database and the walmart_ecommerce_product_details
 --              table with vector embedding support for semantic search capabilities.
 -- 
@@ -35,9 +37,6 @@
 -- SECTION 1: Create Database
 -- -----------------------------------------------------------------------------
 CREATE DATABASE ProductDB;
-GO
-
-USE ProductDB;
 GO
 
 

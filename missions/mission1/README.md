@@ -89,19 +89,11 @@ WITH (
 
 
 ## Select the Embedding and Chat Models
-In these next steps, you will be converting prompts and queries into vector representations to perform semantic search and generating responses based on retrieved information. You will need access to the [text-embedding-3-small](https://ai.azure.us/explore/models/text-embedding-3-small/version/2/registry/azure-openai) embedding model and a chat model provider, this walkthrough will use gpt-5-mini.
+In these next steps, you will be converting prompts and queries into vector representations to perform semantic search and generating responses based on retrieved information. You will need access to the [text-embedding-3-small](https://ai.azure.us/explore/models/text-embedding-3-small/version/2/registry/azure-openai) embedding model and a chat model provider, this walkthrough will use [gpt-5-mini](https://ai.azure.com/catalog/models/gpt-5-mini).
 
-There are several embedding model providers available, below are popular options:
+There are several model providers available, below are two recommended options:
 - GitHub Models, which is free to use. You can find quickstart guides on how to use models from [GitHub Models](https://docs.github.com/en/github-models/quickstart)
 - Deploy models with Microsoft Foundry. Docuementation can be found [here](https://learn.microsoft.com/ai/foundry/model-management/deploy-models).
-
-The recommended completion models for this mission are as follows:
-| Purpose | Model | Provider |
-|---------|-------|----------|
-| **Required Embedding Model** | [text-embedding-3-small](https://github.com/marketplace/models/azure-openai/text-embedding-3-small) | Microsoft Foundry / [GitHub Models](https://github.com/marketplace/models/azure-openai/text-embedding-3-small) |
-| Text Generation | [gpt-5-mini](https://ai.azure.com/catalog/models/gpt-5-mini) | Microsoft Foundry / [GitHub Models](https://github.com/marketplace/models/azure-openai/gpt-5-mini)|
-| Text Generation | [qwen3](https://ai.azure.com/catalog/models/qwen-qwen3-8b) | Microsoft Foundry/[Ollama](https://ollama.com/library/qwen3) |
-| Text Generation | [Claude Sonnet 4.5](https://ai.azure.com/catalog/models/claude-sonnet-4-5) | Microsoft Foundry |
 
 You can get your endpoint and key from the provider you choose. Make sure to have these ready for the next steps. You can find the Microsoft Foundry model keys in the project overview of your Foundry resouce. [Visit the documentation](https://learn.microsoft.com/azure/ai-foundry/foundry-models/how-to/deploy-foundry-models?view=foundry)
 

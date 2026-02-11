@@ -39,8 +39,9 @@
 			"ms-dotnettools.csharp",
 			"ms-python.python",
 			"ms-toolsai.jupyter",
-			"GitHub.copilot-chat"
-		],
+			"GitHub.copilot-chat",
+			"ms-dotnettools.dotnet-interactive-vscode"
+		]
 	}
 },
 // Use 'forwardPorts' to make a list of ports inside the container available locally.
